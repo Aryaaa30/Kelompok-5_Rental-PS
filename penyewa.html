@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="ps.jpg">
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="css/tiny-slider.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <title>Tabel Penyewa - Rental PS</title>
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      color: #333;
+      background-color: #f8f9fa;
+    }
+
+    .navbar {
+      background-color: #343a40 !important;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .navbar-nav .nav-link {
+      color: #ddd !important;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: #fff !important;
+    }
+
+    .table-section {
+      padding: 100px 0;
+    }
+
+    .table {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .table thead th {
+      background-color: #343a40;
+      color: #fff;
+    }
+
+    .btn {
+      margin: 0 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Start Header/Navigation -->
+  <nav class="custom-navbar navbar navbar-expand-md navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Rental PS<span>.</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarsFurni">
+        <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+          <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="profil.html">Profil</a></li>
+          <li class="nav-item"><a class="nav-link" href="penyewa.html">Penyewa</a></li>
+          <li class="nav-item"><a class="nav-link" href="playstation.html">PlayStation</a></li>
+          <li class="nav-item"><a class="nav-link" href="transaksi.html">Transaksi</a></li>
+          <li class="nav-item"><a class="nav-link" href="laporan.html">Laporan</a></li>
+        </ul>
+        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+          <li><a class="nav-link" href="#"><img src="images/user.svg" alt="User"></a></li>
+          <li><a class="nav-link" href="cart.html"><img src="images/cart.svg" alt="Cart"></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Header/Navigation -->
+
+  <!-- Start Table Section -->
+  <div class="table-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <h2 class="section-title text-center">Daftar Penyewa</h2>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Nama Penyewa</th>
+                  <th scope="col">Tanggal Pengambilan</th>
+                  <th scope="col">Tanggal Pengembalian</th>
+                  <th scope="col">Harga</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="rentersTableBody">
+                <!-- Renters data will be inserted here dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Table Section -->
+
+  <!-- Modal for Editing -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Edit Penyewa</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editForm">
+            <input type="hidden" id="editIndex">
+            <div class="mb-3">
+              <label for="editName" class="form-label">Nama Penyewa</label>
+              <input type="text" class="form-control" id="editName" required>
+            </div>
+            <div class="mb-3">
+              <label for="editPickup" class="form-label">Tanggal Pengambilan</label>
+              <input type="date" class="form-control" id="editPickup" required>
+            </div>
+            <div class="mb-3">
+              <label for="editReturn" class="form-label">Tanggal Pengembalian</label>
+              <input type="date" class="form-control" id="editReturn" required>
+            </div>
+            <div class="mb-3">
+              <label for="editPrice" class="form-label">Harga</label>
+              <input type="number" class="form-control" id="editPrice" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/custom.js"></script>
+  <script>
+    // Initialize renters data
+    let renters = JSON.parse(localStorage.getItem('renters')) || [
+      { name: 'John Doe', pickup: '2024-05-20', return: '2024-05-25', price: 50 },
+      { name: 'Jane Smith', pickup: '2024-05-21', return: '2024-05-26', price: 45 },
+      { name: 'Michael Johnson', pickup: '2024-05-22', return: '2024-05-27', price: 60 },
+      { name: 'Emily Davis', pickup: '2024-05-23', return: '2024-05-28', price: 55 },
+      { name: 'David Wilson', pickup: '2024-05-24', return: '2024-05-29', price: 50 },
+    ];
+
+    // Function to render renters table
+    function renderRenters() {
+      const rentersTableBody = document.getElementById('rentersTableBody');
+      rentersTableBody.innerHTML = '';
+      renters.forEach((renter, index) => {
+        const row = `
+          <tr>
+            <td>${renter.name}</td>
+            <td>${renter.pickup}</td>
+            <td>${renter.return}</td>
+            <td>$${renter.price}</td>
+            <td>
+              <button class="btn btn-primary btn-sm" onclick="editRenter(${index})">Edit</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteRenter(${index})">Delete</button>
+            </td>
+          </tr>
+        `;
+        rentersTableBody.insertAdjacentHTML('beforeend', row);
+      });
+    }
+
+    // Function to edit a renter
+    function editRenter(index) {
+      const renter = renters[index];
+      document.getElementById('editIndex').value = index;
+      document.getElementById('editName').value = renter.name;
+      document.getElementById('editPickup').value = renter.pickup;
+      document.getElementById('editReturn').value = renter.return;
+      document.getElementById('editPrice').value = renter.price;
+      const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+      editModal.show();
+    }
+
+    // Function to update renter
+    document.getElementById('editForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const index = document.getElementById('editIndex').value;
+      renters[index].name = document.getElementById('editName').value;
+      renters[index].pickup = document.getElementById('editPickup').value;
+      renters[index].return = document.getElementById('editReturn').value;
+      renters[index].price = document.getElementById('editPrice').value;
+      localStorage.setItem('renters', JSON.stringify(renters));
+      renderRenters();
+      const editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+      editModal.hide();
+    });
+
+    // Function to delete a renter
+    function deleteRenter(index) {
+      renters.splice(index, 1);
+      localStorage.setItem('renters', JSON.stringify(renters));
+      renderRenters();
+    }
+
+    // Initial render
+    renderRenters();
+  </script>
+</body>
+</html>

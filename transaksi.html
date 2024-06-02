@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="ps.jpg">
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="css/tiny-slider.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <title>Daftar Transaksi - Rental PS</title>
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      color: #333;
+      background-color: #f8f9fa;
+    }
+
+    .navbar {
+      background-color: #343a40 !important;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .navbar-nav .nav-link {
+      color: #ddd !important;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: #fff !important;
+    }
+
+    .table-section {
+      padding: 100px 0;
+    }
+
+    .table {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .table thead th {
+      background-color: #343a40;
+      color: #fff;
+    }
+
+    .table .actions {
+      display: flex;
+      gap: 5px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
+      padding-top: 60px;
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Start Header/Navigation -->
+  <nav class="custom-navbar navbar navbar-expand-md navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Rental PS<span>.</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarsFurni">
+        <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+          <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="profil.html">Profil</a></li>
+          <li class="nav-item"><a class="nav-link" href="penyewa.html">Penyewa</a></li>
+          <li class="nav-item"><a class="nav-link" href="playstation.html">PlayStation</a></li>
+          <li class="nav-item"><a class="nav-link" href="transaksi.html">Transaksi</a></li>
+          <li class="nav-item"><a class="nav-link" href="laporan.html">Laporan</a></li>
+        </ul>
+        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+          <li><a class="nav-link" href="#"><img src="images/user.svg" alt="User"></a></li>
+          <li><a class="nav-link" href="cart.html"><img src="images/cart.svg" alt="Cart"></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Header/Navigation -->
+
+  <!-- Start Table Section -->
+  <div class="table-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <h2 class="section-title text-center">Daftar Transaksi</h2>
+          <button class="btn btn-primary mb-3" onclick="showModal()">Tambah Transaksi</button>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Nama Penyewa</th>
+                  <th scope="col">Tanggal Transaksi</th>
+                  <th scope="col">Jenis Transaksi</th>
+                  <th scope="col">Jumlah</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="transactionTableBody">
+                <!-- Dynamic Rows Go Here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Table Section -->
+
+  <!-- Start Modal Section -->
+  <div id="transactionModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="hideModal()">&times;</span>
+      <h2 id="modalTitle">Tambah Transaksi</h2>
+      <form id="transactionForm">
+        <input type="hidden" id="transactionId">
+        <div class="mb-3">
+          <label for="namaPenyewa" class="form-label">Nama Penyewa</label>
+          <input type="text" class="form-control" id="namaPenyewa" required>
+        </div>
+        <div class="mb-3">
+          <label for="tanggalTransaksi" class="form-label">Tanggal Transaksi</label>
+          <input type="date" class="form-control" id="tanggalTransaksi" required>
+        </div>
+        <div class="mb-3">
+          <label for="jenisTransaksi" class="form-label">Jenis Transaksi</label>
+          <select class="form-control" id="jenisTransaksi" required>
+            <option value="Peminjaman">Peminjaman</option>
+            <option value="Pengembalian">Pengembalian</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="jumlah" class="form-label">Jumlah</label>
+          <input type="number" class="form-control" id="jumlah" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </form>
+    </div>
+  </div>
+  <!-- End Modal Section -->
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/custom.js"></script>
+
+  <script>
+    let transactions = [
+      { id: 1, namaPenyewa: 'John Doe', tanggalTransaksi: '2024-05-20', jenisTransaksi: 'Peminjaman', jumlah: 50 },
+      { id: 2, namaPenyewa: 'Jane Smith', tanggalTransaksi: '2024-05-21', jenisTransaksi: 'Pengembalian', jumlah: 0 },
+      { id: 3, namaPenyewa: 'Michael Johnson', tanggalTransaksi: '2024-05-22', jenisTransaksi: 'Peminjaman', jumlah: 60 },
+      { id: 4, namaPenyewa: 'Emily Davis', tanggalTransaksi: '2024-05-23', jenisTransaksi: 'Peminjaman', jumlah: 55 },
+      { id: 5, namaPenyewa: 'David Wilson', tanggalTransaksi: '2024-05-24', jenisTransaksi: 'Pengembalian', jumlah: 0 }
+    ];
+
+    function renderTable() {
+      const tableBody = document.getElementById('transactionTableBody');
+      tableBody.innerHTML = '';
+      transactions.forEach(transaction => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${transaction.namaPenyewa}</td>
+          <td>${transaction.tanggalTransaksi}</td>
+          <td>${transaction.jenisTransaksi}</td>
+          <td>$${transaction.jumlah}</td>
+          <td class="actions">
+            <button class="btn btn-sm btn-warning" onclick="editTransaction(${transaction.id})">Edit</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteTransaction(${transaction.id})">Delete</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function showModal() {
+      document.getElementById('transactionModal').style.display = 'block';
+    }
+
+    function hideModal() {
+      document.getElementById('transactionModal').style.display = 'none';
+      document.getElementById('transactionForm').reset();
+      document.getElementById('transactionId').value = '';
+      document.getElementById('modalTitle').innerText = 'Tambah Transaksi';
+    }
+
+    function editTransaction(id) {
+      const transaction = transactions.find(tran => tran.id === id);
+      document.getElementById('transactionId').value = transaction.id;
+      document.getElementById('namaPenyewa').value = transaction.namaPenyewa;
+      document.getElementById('tanggalTransaksi').value = transaction.tanggalTransaksi;
+      document.getElementById('jenisTransaksi').value = transaction.jenisTransaksi;
+      document.getElementById('jumlah').value = transaction.jumlah;
+      document.getElementById('modalTitle').innerText = 'Edit Transaksi';
+      showModal();
+    }
+
+    function deleteTransaction(id) {
+      transactions = transactions.filter(tran => tran.id !== id);
+      renderTable();
+    }
+
+    document.getElementById('transactionForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const id = document.getElementById('transactionId').value;
+      const namaPenyewa = document.getElementById('namaPenyewa').value;
+      const tanggalTransaksi = document.getElementById('tanggalTransaksi').value;
+      const jenisTransaksi = document.getElementById('jenisTransaksi').value;
+      const jumlah = document.getElementById('jumlah').value;
+
+      if (id) {
+        // Update existing transaction
+        const transaction = transactions.find(tran => tran.id == id);
+        transaction.namaPenyewa = namaPenyewa;
+        transaction.tanggalTransaksi = tanggalTransaksi;
+        transaction.jenisTransaksi = jenisTransaksi;
+        transaction.jumlah = jumlah;
+      } else {
+        // Add new transaction
+        const newTransaction = {
+          id: transactions.length ? Math.max(transactions.map(tran => tran.id)) + 1 : 1,
+          namaPenyewa,
+          tanggalTransaksi,
+          jenisTransaksi,
+          jumlah
+        };
+        transactions.push(newTransaction);
+      }
+
+      renderTable();
+      hideModal();
+    });
+
+    // Initial render
+    renderTable();
+  </script>
+</body>
+</html>

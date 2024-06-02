@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="ps.jpg">
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="css/tiny-slider.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <title>Daftar PlayStation - Rental PS</title>
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      color: #333;
+      background-color: #f8f9fa;
+    }
+
+    .navbar {
+      background-color: #343a40 !important;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .navbar-nav .nav-link {
+      color: #ddd !important;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: #fff !important;
+    }
+
+    .table-section {
+      padding: 100px 0;
+    }
+
+    .table {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .table thead th {
+      background-color: #343a40;
+      color: #fff;
+    }
+
+    .table .actions {
+      display: flex;
+      gap: 5px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
+      padding-top: 60px;
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Start Header/Navigation -->
+  <nav class="custom-navbar navbar navbar-expand-md navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Rental PS<span>.</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarsFurni">
+        <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+          <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="profil.html">Profil</a></li>
+          <li class="nav-item"><a class="nav-link" href="penyewa.html">Penyewa</a></li>
+          <li class="nav-item"><a class="nav-link" href="playstation.html">PlayStation</a></li>
+          <li class="nav-item"><a class="nav-link" href="transaksi.html">Transaksi</a></li>
+          <li class="nav-item"><a class="nav-link" href="laporan.html">Laporan</a></li>
+        </ul>
+        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+          <li><a class="nav-link" href="#"><img src="images/user.svg" alt="User"></a></li>
+          <li><a class="nav-link" href="cart.html"><img src="images/cart.svg" alt="Cart"></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Header/Navigation -->
+
+  <!-- Start Table Section -->
+  <div class="table-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <h2 class="section-title text-center">Daftar PlayStation</h2>
+          <button class="btn btn-primary mb-3" onclick="showModal()">Tambah PlayStation</button>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Model</th>
+                  <th scope="col">Deskripsi</th>
+                  <th scope="col">Harga Sewa</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="playStationTableBody">
+                <!-- Dynamic Rows Go Here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Table Section -->
+
+  <!-- Start Modal Section -->
+  <div id="playStationModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="hideModal()">&times;</span>
+      <h2 id="modalTitle">Tambah PlayStation</h2>
+      <form id="playStationForm">
+        <input type="hidden" id="playStationId">
+        <div class="mb-3">
+          <label for="model" class="form-label">Model</label>
+          <input type="text" class="form-control" id="model" required>
+        </div>
+        <div class="mb-3">
+          <label for="deskripsi" class="form-label">Deskripsi</label>
+          <textarea class="form-control" id="deskripsi" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="hargaSewa" class="form-label">Harga Sewa</label>
+          <input type="text" class="form-control" id="hargaSewa" required>
+        </div>
+        <div class="mb-3">
+          <label for="status" class="form-label">Status</label>
+          <select class="form-control" id="status" required>
+            <option value="Tersedia">Tersedia</option>
+            <option value="Disewa">Disewa</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </form>
+    </div>
+  </div>
+  <!-- End Modal Section -->
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/custom.js"></script>
+
+  <script>
+    let playStations = [
+      { id: 1, model: 'PlayStation 4', deskripsi: 'PlayStation 4 lengkap dengan 2 stik, kabel HDMI, dan beberapa game digital.', hargaSewa: '$20/hari', status: 'Tersedia' },
+      { id: 2, model: 'PlayStation 4 Pro', deskripsi: 'PlayStation 4 Pro dengan performa lebih tinggi, 2 stik, kabel HDMI, dan beberapa game digital.', hargaSewa: '$25/hari', status: 'Disewa' },
+      { id: 3, model: 'PlayStation 5', deskripsi: 'PlayStation 5 terbaru dengan grafis ultra HD, 2 stik, kabel HDMI, dan beberapa game digital.', hargaSewa: '$30/hari', status: 'Tersedia' },
+      { id: 4, model: 'PlayStation 3', deskripsi: 'PlayStation 3 dengan 2 stik dan beberapa game digital klasik.', hargaSewa: '$15/hari', status: 'Tersedia' },
+      { id: 5, model: 'PlayStation 2', deskripsi: 'PlayStation 2 dengan 2 stik dan game-game klasik.', hargaSewa: '$10/hari', status: 'Disewa' }
+    ];
+
+    function renderTable() {
+      const tableBody = document.getElementById('playStationTableBody');
+      tableBody.innerHTML = '';
+      playStations.forEach(playStation => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${playStation.model}</td>
+          <td>${playStation.deskripsi}</td>
+          <td>${playStation.hargaSewa}</td>
+          <td>${playStation.status}</td>
+          <td class="actions">
+            <button class="btn btn-sm btn-warning" onclick="editPlayStation(${playStation.id})">Edit</button>
+            <button class="btn btn-sm btn-danger" onclick="deletePlayStation(${playStation.id})">Delete</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function showModal() {
+      document.getElementById('playStationModal').style.display = 'block';
+    }
+
+    function hideModal() {
+      document.getElementById('playStationModal').style.display = 'none';
+      document.getElementById('playStationForm').reset();
+      document.getElementById('playStationId').value = '';
+      document.getElementById('modalTitle').innerText = 'Tambah PlayStation';
+    }
+
+    function editPlayStation(id) {
+      const playStation = playStations.find(ps => ps.id === id);
+      document.getElementById('playStationId').value = playStation.id;
+      document.getElementById('model').value = playStation.model;
+      document.getElementById('deskripsi').value = playStation.deskripsi;
+      document.getElementById('hargaSewa').value = playStation.hargaSewa;
+      document.getElementById('status').value = playStation.status;
+      document.getElementById('modalTitle').innerText = 'Edit PlayStation';
+      showModal();
+    }
+
+    function deletePlayStation(id) {
+      playStations = playStations.filter(ps => ps.id !== id);
+      renderTable();
+    }
+
+    document.getElementById('playStationForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const id = document.getElementById('playStationId').value;
+      const model = document.getElementById('model').value;
+      const deskripsi = document.getElementById('deskripsi').value;
+      const hargaSewa = document.getElementById('hargaSewa').value;
+      const status = document.getElementById('status').value;
+
+      if (id) {
+        // Update existing playStation
+        const playStation = playStations.find(ps => ps.id == id);
+        playStation.model = model;
+        playStation.deskripsi = deskripsi;
+        playStation.hargaSewa = hargaSewa;
+        playStation.status = status;
+      } else {
+        // Add new playStation
+        const newPlayStation = {
+          id: playStations.length ? Math.max(playStations.map(ps => ps.id)) + 1 : 1,
+          model,
+          deskripsi,
+          hargaSewa,
+          status
+        };
+        playStations.push(newPlayStation);
+      }
+
+      renderTable();
+      hideModal();
+    });
+
+    // Initial render
+    renderTable();
+  </script>
+</body>
+</html>
